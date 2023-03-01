@@ -116,5 +116,37 @@ namespace SportsStore.Tests
             Assert.That(products[1].Name, Is.EqualTo("P4"));
             Assert.That(products[1].Category, Is.EqualTo("Cat1"));
         }
+
+        [Test]
+        public void Index_GenerateCategorySpecificProducts_ReturnsCountOfSpecifcCategory()
+        {
+            //Arrange
+            var mock = new Mock<IStoreRepository>();
+            mock.Setup(m => m.Products).Returns((new Product[]
+            {
+                new Product{ProductId = 1, Name = "P1", Category = "Cat1"},
+                new Product{ProductId = 2, Name = "P2", Category = "Cat2"},
+                new Product{ProductId = 3, Name = "P3", Category = "Cat2"},
+                new Product{ProductId = 4, Name = "P4", Category = "Cat1"},
+                new Product{ProductId = 5, Name = "P5", Category = "Cat3"},
+            }).AsQueryable<Product>());
+            var homeController = new HomeController(mock.Object);
+            homeController.PageSize = 3;
+
+            Func<ViewResult?, ProductsListViewModel?> GetModel = result => result?.ViewData?.Model as ProductsListViewModel;
+
+            //act
+            int? res1 = GetModel(homeController.Index("Cat1") as ViewResult)?.PagingInfo.TotalItems;
+            int? res2 = GetModel(homeController.Index("Cat2") as ViewResult)?.PagingInfo.TotalItems;
+            int? res3 = GetModel(homeController.Index("Cat3") as ViewResult)?.PagingInfo.TotalItems;
+            int? resAll = GetModel(homeController.Index(null) as ViewResult)?.PagingInfo.TotalItems;
+
+            //assert
+            Assert.That(res1, Is.EqualTo(2));
+            Assert.That(res2, Is.EqualTo(2));
+            Assert.That(res3, Is.EqualTo(1));
+            Assert.That(resAll, Is.EqualTo(5));
+
+        }
     }
 }
