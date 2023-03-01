@@ -14,7 +14,7 @@ namespace SportsStore.Tests
     internal class HomeControllerTests
     {
         [Test]
-        public void Index_SendRepositoryDataToView_ResultsAreEqualTo()
+        public void Index_SendRepositoryDataToView_ResultsAreTheSameLikeInTheDatabase()
         {
             //arange
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
@@ -38,7 +38,7 @@ namespace SportsStore.Tests
         
         
         [Test]
-        public void Index_PaginateTheDataSendedToView_ResultsAreEqualTo()
+        public void Index_PaginateTheDataSendedToView_ResultAreTheSameLikeInTheDatabase()
         {
             //Arrange
             Mock<IStoreRepository> mock = new Mock<IStoreRepository>();
@@ -65,7 +65,7 @@ namespace SportsStore.Tests
         }
 
         [Test]
-        public void Index_PaginateDataThroughProductsListViewModelObject_ResultsiesAreEqualTo()
+        public void Index_PaginateDataThroughProductsListViewModelObject_ResultsAreTheSameLikeInTheDatabase()
         {
             //Arrage Repository
             var mock = new Mock<IStoreRepository>();
@@ -91,7 +91,7 @@ namespace SportsStore.Tests
         }
 
         [Test]
-        public void Index_FilterProductsByCategory_ResultsAreEqualToAndTrue()
+        public void Index_FilterProductsByCategory_ResultsAreTHeSameLikeInTHeDatabase()
         {
             //arrange
             var mock = new Mock<IStoreRepository>();
