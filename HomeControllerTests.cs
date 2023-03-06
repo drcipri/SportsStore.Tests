@@ -24,7 +24,7 @@ namespace SportsStore.Tests
                 new Product{ProductId = 2, Name = "P2"}
             }).AsQueryable<Product>());
 
-            HomeController controller = new HomeController(mock.Object);
+            HomeController controller = new (mock.Object);
 
             //act
             var result = (controller.Index(null) as ViewResult)?.ViewData.Model as ProductsListViewModel ?? new();
@@ -51,7 +51,7 @@ namespace SportsStore.Tests
                 new Product{ProductId = 5, Name = "P5"},
             }).AsQueryable<Product>());
 
-            HomeController controller = new HomeController(mock.Object);
+            HomeController controller = new(mock.Object);
             controller.PageSize = 3;
 
             //act
@@ -65,7 +65,7 @@ namespace SportsStore.Tests
         }
 
         [Test]
-        public void Index_PaginateDataThroughProductsListViewModelObject_ResultsAreTheSameLikeInTheDatabase()
+        public void Index_PaginateDataThroughProductsListViewModelObject_PagingInfoResultsAreTheSameAsInTHeView()
         {
             //Arrage Repository
             var mock = new Mock<IStoreRepository>();
